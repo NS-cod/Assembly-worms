@@ -3,15 +3,24 @@ mapa: .asciz "__________________________________________________________________
 longitud = . -mapa
 .text
 
+//Registros de uso:
+//R7,R0,R2,R1
+imprimir_mapa:
+	.fnstart
+		push{r7,r0,r2,r1}
+		mov r7,#4
+		mov r0,#1	
+		mov r2,#longitud	//copiamos la longitud del mapa en r2
+		ldr r1,=mapa		//direccionamos el mapa en memoria
+		swi 0
+		pop{r7,r0,r2,r1}
+	.fnend
+	
+	
 .global main
 
 main:
-	mov r7,#4
-	mov r0,#1	
-	mov r2,#longitud	
-	ldr r1,=mapa
-	swi 0
-
+	bal imprimir_mapa
 	mov r7,#1
 	swi 0
 

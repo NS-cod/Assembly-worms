@@ -1,6 +1,7 @@
 .data
 mapa: .asciz "______________________________________________________________________________________|\n                                                                                      |\n          *** WORMS ARMAGEDON - ORGA 1 ***                                            |\n______________________________________________________________________________________|\n                                                                                      |\n                                                                                      |\n                                                                                      |\n                                                                                      |\n                                                                                      |\n                                                                                      |\n           +------------+                                                             |\n           |            |                                             @               |\n           |            |                                             ####            |\n           |            |                                            +----------------+\n           +------------+                                            |                |\n                                                                     |                |\n                                                                     |                |\n                                                                     |                |\n                                               +--------------+      |                |\n                                               |              |      |                |\n           @                                   |              |      |                |\n        ####                                   |              |      |                |\n+---------------------------------------+      |              |      |                |\n|                                       |      |              |      |                |\n|                                       |      +--------------+      |                |\n|                                       |                            |                |\n|                                       |                            |                |\n|                                       |                            +----------------+\n|                                       |                                             |\n+---------------------------------------+                                             |\n______________________________________________________________________________________|\n"
 longitud = . -mapa
+gusanito: .int 1948
 .text
 
 //Registros de uso:
@@ -16,10 +17,39 @@ imprimir_mapa:
 		pop {r0,r1,r2,r7}
 		bx lr
 	.fnend
+//Registros de uso:
+//
+trayectoria_derecha:
+	.fnstart
+		push{}
+		ldr r4,=gusanito
+		ldr r4,[r4]
+	repetir:
+		add r4,#1
+		bal colision
+		cmp r1,#0
+		beq modificar_mapa
+		cmp r1,#1
+		bal 
+		
+		pop{}
+		bx lr
+	.fnend
 	
+modificar_mapa:
+	.fnstart
+		push{}
+		pop{}
+		bx lr
+	.fnend
+colision:
+	.fnstart
+		push{}
+		pop{}
+		bx lr
+	.fnend
 	
 .global main
-
 main:
 	bal imprimir_mapa
 	

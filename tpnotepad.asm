@@ -7,13 +7,14 @@ longitud = . -mapa
 //R7,R0,R2,R1
 imprimir_mapa:
 	.fnstart
-		push{r7,r0,r2,r1}
+		push {r0,r1,r2,r7}
 		mov r7,#4
 		mov r0,#1	
 		mov r2,#longitud	//copiamos la longitud del mapa en r2
 		ldr r1,=mapa		//direccionamos el mapa en memoria
 		swi 0
-		pop{r7,r0,r2,r1}
+		pop {r0,r1,r2,r7}
+		bx lr
 	.fnend
 	
 	
@@ -21,6 +22,7 @@ imprimir_mapa:
 
 main:
 	bal imprimir_mapa
+	
 	mov r7,#1
 	swi 0
 
